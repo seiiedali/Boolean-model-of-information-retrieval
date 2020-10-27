@@ -1,5 +1,6 @@
 import wikipedia
 
+
 class File:
 
     def create():
@@ -17,5 +18,6 @@ class File:
                 f.write(p.content)
             print('SAVED')
         print('End')
+
 
 File.create()

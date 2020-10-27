@@ -1,5 +1,6 @@
 import os
 
+
 class DocText:
 
     def getdoctext(self):

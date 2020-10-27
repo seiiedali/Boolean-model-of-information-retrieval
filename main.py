@@ -1,5 +1,4 @@
 from PositionalIndex import PositionalIndex
-# from test import File
 from GetDocText import DocText
 import re
 import string
@@ -7,7 +6,7 @@ import datetime
 
 if __name__ == '__main__':
 
-    #CREATING INDEX TABLE
+    # CREATING INDEX TABLE
     docstext = DocText().getdoctext()
 
     print('wait for processing...')
@@ -19,7 +18,8 @@ if __name__ == '__main__':
     for i in docstext['textfilelist']:
         docid += 1
         documentlist[docid] = docstext['filesname'][docid - 1]
-        dirtytokens = re.split(r'\s|\n', i.translate(str.maketrans('', '', string.punctuation)))
+        dirtytokens = re.split(r'\s|\n', i.translate(
+            str.maketrans('', '', string.punctuation)))
         cleartokens = list(filter(lambda t: t != '', dirtytokens))
         wordpos = 0
 
@@ -34,21 +34,24 @@ if __name__ == '__main__':
             else:
                 uniquetokens[term] = PositionalIndex(term)
                 uniquetokens[term].doclist[docid] = [wordpos]
-    #CREATE LOG
+    # CREATE LOG
     time = datetime.datetime.now().strftime("%Y-%m-%d %H'' %M' %S")
     logName = "./logs/" + str(time) + ".txt"
-    with open( logName, "w") as log:
-        log.write(str(time) + "\n\nFile indexing for current files are:("+ str(docstext['filesname'].__len__()) + " files)\n\n")
-        for index,fileName in enumerate(docstext['filesname']):
+    with open(logName, "w") as log:
+        log.write(str(time) + "\n\nFile indexing for current files are:(" +
+                  str(docstext['filesname'].__len__()) + " files)\n\n")
+        for index, fileName in enumerate(docstext['filesname']):
             log.write(str(index) + "- " + fileName + "\n")
-        log.write("\n\nIndex Table for current files are:(" + str(uniquetokens.__len__())+" unique words)\n\n")
+        log.write("\n\nIndex Table for current files are:(" +
+                  str(uniquetokens.__len__())+" unique words)\n\n")
         for i in uniquetokens:
-            log.write(uniquetokens[i].term +" "+ str(uniquetokens[i].doclist) + "\n")
+            log.write(uniquetokens[i].term + " " +
+                      str(uniquetokens[i].doclist) + "\n")
 
     for i in uniquetokens:
         print(uniquetokens[i].term, uniquetokens[i].doclist)
 
-    #Get the Query
+    # Get the Query
     print('\n\nQuery examples: \n1. a OR b AND c\n2. a WITH b WITH c\n3. a NEAR 3 b NEAR 4 c')
     input = input(print('\nEnter Query: '))
 
@@ -56,14 +59,14 @@ if __name__ == '__main__':
         log.write("\nThe Query is:\n" + input + "\n")
 
     inputlist = input.strip(' ')
-    queryterms = re.split(r'\sAND\s|\sOR\s|\sWITH\s|\sNEAR\s', input.strip(' '))
-    queryoperations = re.findall('\sAND\s|\sOR\s|\sWITH\s|\sNEAR\s', input.strip(' '))
+    queryterms = re.split(
+        r'\sAND\s|\sOR\s|\sWITH\s|\sNEAR\s', input.strip(' '))
+    queryoperations = re.findall(
+        '\sAND\s|\sOR\s|\sWITH\s|\sNEAR\s', input.strip(' '))
 
     new_input_list = [item.strip(' ').lower() for item in inputlist]
     new_query_terms = [item.strip(' ').lower() for item in queryterms]
     new_query_options = [item.strip(' ') for item in queryoperations]
-
-
 
     def anddef(t1, t2):
         result = []
@@ -96,7 +99,6 @@ if __name__ == '__main__':
                 result.append(i)
         return result
 
-
     def calc_and_or():
         result_term = []
         for i in new_query_terms:
@@ -106,7 +108,8 @@ if __name__ == '__main__':
                     y = notdef(uniquetokens[x[x.__len__() - 1]])
                     result_term.append(y)
                 else:
-                    result_term.append(uniquetokens[x[x.__len__() - 1]].doclist.keys())
+                    result_term.append(
+                        uniquetokens[x[x.__len__() - 1]].doclist.keys())
             else:
                 result_term.append(None)
 
@@ -166,7 +169,6 @@ if __name__ == '__main__':
                             break
         return result
 
-
     def calc_with_near():
         for i in new_query_terms:
             x = i.split(' ')
@@ -176,28 +178,8 @@ if __name__ == '__main__':
         if 'WITH' in new_query_options:
             if uniquetokens.__contains__(new_query_terms[0]) and uniquetokens.__contains__(
                     new_query_terms[1]) and uniquetokens.__contains__(new_query_terms[2]):
-                result = withdef(uniquetokens[new_query_terms[0]], uniquetokens[new_query_terms[1]], uniquetokens[new_query_terms[2]])
-                if result.__len__() == 0:
-                    print(None)
-                else:
-                    for i in result:
-                        print('RESULTS:')
-                        print(documentlist[i])
-                    with open(logName, "a") as log:
-                        log.write("\nRESULTS:\n")
-                        for i in result:
-                            log.write(documentlist[i]+ "\n")
-            else:
-                result = None
-                print(result)
-
-        elif 'NEAR' in new_query_options:
-            n1 = new_query_terms[1].split(' ')[0]
-            n2 = new_query_terms[2].split(' ')[0]
-            if uniquetokens.__contains__(new_query_terms[0]) and uniquetokens.__contains__(
-                    new_query_terms[1].split(' ')[1]) and uniquetokens.__contains__(
-                new_query_terms[2].split(' ')[1]):
-                result = neardef(uniquetokens[new_query_terms[0]], uniquetokens[new_query_terms[1].split(' ')[1]], uniquetokens[new_query_terms[2].split(' ')[1]], int(n1), int(n2))
+                result = withdef(
+                    uniquetokens[new_query_terms[0]], uniquetokens[new_query_terms[1]], uniquetokens[new_query_terms[2]])
                 if result.__len__() == 0:
                     print(None)
                 else:
@@ -212,10 +194,31 @@ if __name__ == '__main__':
                 result = None
                 print(result)
 
+        elif 'NEAR' in new_query_options:
+            n1 = new_query_terms[1].split(' ')[0]
+            n2 = new_query_terms[2].split(' ')[0]
+            if uniquetokens.__contains__(new_query_terms[0]) and uniquetokens.__contains__(
+                new_query_terms[1].split(' ')[1]) and uniquetokens.__contains__(
+                    new_query_terms[2].split(' ')[1]):
+                result = neardef(uniquetokens[new_query_terms[0]], uniquetokens[new_query_terms[1].split(
+                    ' ')[1]], uniquetokens[new_query_terms[2].split(' ')[1]], int(n1), int(n2))
+                if result.__len__() == 0:
+                    print(None)
+                else:
+                    for i in result:
+                        print('RESULTS:')
+                        print(documentlist[i])
+                    with open(logName, "a") as log:
+                        log.write("\nRESULTS:\n")
+                        for i in result:
+                            log.write(documentlist[i] + "\n")
+            else:
+                result = None
+                print(result)
 
     print('Query Terms: ', new_query_terms)
     with open(logName, "a") as log:
-        log.write("\nQuery Terms: \n" + str(new_query_terms) +"\n")
+        log.write("\nQuery Terms: \n" + str(new_query_terms) + "\n")
 
     if new_query_options.__contains__('WITH') & any(i in new_query_options for i in ['NEAR', 'AND', 'OR']):
         print('!!BAD QUERY!!')
