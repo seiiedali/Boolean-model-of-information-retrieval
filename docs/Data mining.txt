@@ -1,0 +1,5 @@
+== In mathematics ==
+An integer is called even if it is divisible by 2. For integers written in a numeral system based on an even number, such as decimal, hexadecimal, or in any other base that is even, divisibility by 2 is easily tested by merely looking at the last digit. If it is even, then the whole number is even. In particular, when written in the decimal system, all multiples of 2 will end in 0, 2, 4, 6, or 8.
+Two is the smallest prime number, and the only even prime number (for this reason it is sometimes called "the oddest prime"). The next prime is three. Two and three are the only two consecutive prime numbers. 2 is the first Sophie Germain prime, the first factorial prime, the first Lucas prime, and the first Ramanujan prime.Two is the third (or fourth) Fibonacci number.
+Two is the base of the binary system, the numeral system with the least number of tokens allowing to denote a natural number n substantially more concise (log2 n  tokens), compared to a direct representation by the corresponding count of a single token (n tokens). This binary number system is used extensively in computing.
+For any number x: i am ali
