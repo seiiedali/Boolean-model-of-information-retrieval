@@ -21,3 +21,6 @@ allowed operator are:
 - NEAR #
 which can place within the the query tokens
 Finally, all possible answers (related documnets) will be shown
+
+> ## `CreateText.py`
+> This is an option provided in case you don't have access to documents to interpret or want to try some new documents. This script will find requested topic in Wikipedia and put it as a plain text document in `docs/` directory
