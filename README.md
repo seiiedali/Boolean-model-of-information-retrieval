@@ -18,7 +18,7 @@ allowed operator are:
 - AND
 - OR
 - WITH
-- NEAR #
+- NEAR #  
 which can place within the the query tokens
 Finally, all possible answers (related documnets) will be shown
 
